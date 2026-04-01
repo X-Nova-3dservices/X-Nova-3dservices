@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop - X Nova 3D Printing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      color: #222;
+      background-color: #fff;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    header {
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      top: 0;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    /* Logo Styles */
+    .logo {
+      display: flex;
+      align-items: center;
+      height: 40px;
+    }
+
+    .logo a {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-img {
+      height: 100px;
+      width: auto;
+      max-width: 200px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Fallback text if image doesn't load */
+    .logo-fallback {
+      font-size: 1.6em;
+      font-weight: 600;
+      color: #111; /* Dark text for light backgrounds */
+      display: none;
+      text-decoration: none;
+    }
+    
+    nav a {
+      text-decoration: none;
+      color: #333;
+      margin: 0 15px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+    
+    nav a:hover {
+      color: #ffcc00;
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #ffcc00;
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* NEW: Cart Icon Styles */
+    .cart-icon {
+      position: relative;
+      margin-left: 20px;
+    }
+
+    .cart-icon a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #f0f0f0;
+      border-radius: 50%;
+      color: #333;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .cart-icon a:hover {
+      background: #ffcc00;
+      color: #111;
+      transform: translateY(-2px);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #ff4444;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7em;
+      font-weight: 600;
+    }
+
+    /* NEW: Search + Auth (minimal styles to blend with existing design) */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-bar input {
+      background: #ffffff;
+      border: 1px solid #222;
+      color: #ddd;
+      padding: 8px 10px;
+      border-radius: 6px;
+      width: 180px;
+    }
+
+    .search-bar input::placeholder {
+      color: #888;
+    }
+
+    .auth-links a {
+      color: #000000;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .auth-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hero Section */
+    .shop-hero {
+      background: linear-gradient(135deg, #1a1a1a, #000);
+      color: white;
+      text-align: center;
+      padding: 160px 20px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shop-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 L1000,100 L0,100 Z" fill="rgba(255,204,0,0.1)"/></svg>');
+      background-size: cover;
+      background-position: bottom;
+    }
+
+    .shop-hero h1 {
+      font-size: 3.5em;
+      margin-bottom: 20px;
+      color: #ffcc00;
+      position: relative;
+    }
+
+    .shop-hero p {
+      font-size: 1.2em;
+      max-width: 600px;
+      margin: 0 auto;
+      opacity: 0.9;
+      position: relative;
+    }
+
+    .section {
+      padding: 100px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section h2 {
+      text-align: center;
+      margin-bottom: 60px;
+      font-size: 2.8em;
+      color: #333;
+      position: relative;
+    }
+    
+    .section h2::after {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 4px;
+      background: #ffcc00;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    /* Category Filters */
+    .category-filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .filter-btn {
+      background: #f0f0f0;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+      font-size: 1em;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: #ffcc00;
+      color: #111;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 204, 0, 0.3);
+    }
+
+    /* Products Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    /* NEW: Product Card Link Styles */
+    .product-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      cursor: pointer;
+    }
+
+    .product-card-link:hover {
+      text-decoration: none;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      border: 2px solid #f0f0f0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* NEW: Ensure the card hover effects still work with link */
+    .product-card-link:hover .product-card {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      border-color: #ffcc00;
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #ff4444;
+      color: white;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.8em;
+      font-weight: 600;
+      z-index: 2;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      transition: transform 0.3s;
+    }
+
+    .product-card-link:hover .product-card img {
+      transform: scale(1.05);
+    }
+
+    .product-card h3 {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+      color: #111;
+    }
+
+    .product-card p {
+      font-size: 0.95em;
+      margin-bottom: 15px;
+      color: #555;
+      min-height: 60px;
+    }
+
+    .product-price {
+      color: #ffcc00;
+      font-size: 1.4em;
+      font-weight: 600;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .product-old-price {
+      color: #999;
+      text-decoration: line-through;
+      font-size: 0.9em;
+      margin-right: 10px;
+    }
+
+    .btn-primary {
+      background: #ffcc00;
+      color: #111;
+      border: none;
+      padding: 14px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      background: #e6b800;
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(255, 204, 0, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #333;
+      border: 2px solid #333;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-outline:hover {
+      background: #333;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Cart Notification */
+    .cart-notification {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: #4CAF50;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      z-index: 1000;
+      transform: translateX(150%);
+      transition: transform 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cart-notification.show {
+      transform: translateX(0);
+    }
+
+    /* Services Banner */
+    .services-banner {
+      background: linear-gradient(135deg, #ffcc00, #ffb300);
+      color: #111;
+      text-align: center;
+      padding: 60px 20px;
+      border-radius: 20px;
+      margin: 80px auto;
+      max-width: 1000px;
+      box-shadow: 0 10px 30px rgba(255, 204, 0, 0.3);
+    }
+
+    .services-banner h2 {
+      font-size: 2.2em;
+      margin-bottom: 15px;
+    }
+
+    .services-banner p {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      background: #111;
+      color: #ddd;
+      padding: 80px 20px 40px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+    }
+
+    footer h4 {
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 1.2em;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    footer h4::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 3px;
+      background: #ffcc00;
+      bottom: 0;
+      left: 0;
+      border-radius: 2px;
+    }
+
+    footer ul {
+      list-style: none;
+    }
+
+    footer ul li {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+    
+    footer ul li i {
+      margin-right: 10px;
+      color: #ffcc00;
+      width: 16px;
+    }
+
+    footer ul li a {
+      color: #bbb;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer ul li a:hover {
+      color: #ffcc00;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 60px;
+      font-size: 0.9em;
+      color: #aaa;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #222;
+      border-radius: 50%;
+      color: #fff;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .social-icons a:hover {
+      background: #ffcc00;
+      transform: translateY(-3px);
+      color: #111;
+    }
+
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav a {
+        margin: 0 10px;
+      }
+
+      .shop-hero h1 {
+        font-size: 2.5em;
+      }
+
+      .section h2 {
+        font-size: 2.2em;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+      
+      .section {
+        padding: 80px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+ <header>
+    <div class="nav-container">
+      <div class="logo">
+        <a href="index.html" style="display: inline-block;">
+          <img src="Photos\Logo and QR\logo 2.png" alt="X Nova 3D Printing" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallbackText').style.display='block';">
+        </a>
+        <span id="fallbackText" class="logo-fallback">X Nova</span>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="shop.html">Shop</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="search-bar">
+          <input type="text" placeholder="Search...">
+        </div>
+        <div class="auth-links">
+          <a href="sign in_sign up.html">Sign In</a> / <a href="sign in_sign up.html">Sign Up</a>
+        </div>
+        <!-- NEW: Cart Icon -->
+        <div class="cart-icon">
+          <a href="cart.html" id="cartIcon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<!-- Cart Notification -->
+<div class="cart-notification" id="cartNotification">
+  <i class="fas fa-check-circle"></i>
+  🎉 Product added to cart!
+</div>
+
+<section class="shop-hero">
+  <h1>3D Printing Shop</h1>
+  <p>Discover our premium 3D printing materials, equipment, and custom printed products</p>
+</section>
+
+<section class="section" id="shop">
+  <h2>Our Products</h2>
+  
+  <div class="category-filters">
+    <button class="filter-btn active" data-filter="all">All Products</button>
+    <button class="filter-btn" data-filter="3d printed products">3D Printed Products</button>
+    <button class="filter-btn" data-filter="filament">Filaments</button>
+    <button class="filter-btn" data-filter="resin">Resins</button>
+        <button class="filter-btn" data-filter="accessory">Accessories</button>
+  </div>
+
+  <div class="products-grid">
+    <!-- Product cards now wrapped in links -->
+    <a href="product-details.html?product=pla-filament" class="product-card-link">
+      <div class="product-card" data-category="filament">
+        <div class="product-badge">Bestseller</div>
+        <img src="https://cdn.pixabay.com/photo/2017/08/01/08/29/3d-printer-2562901_1280.jpg" alt="PLA Filament">
+        <h3>PLA Filament - 1kg</h3>
+        <p>High-quality PLA filament for FDM 3D printing. Perfect for prototypes, models, and decorative items.</p>
+        <span class="product-price">LKR 4,500</span>
+        <button class="btn-primary" onclick="event.preventDefault(); event.stopPropagation(); addToCart('PLA Filament - 1kg', 4500)"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+      </div>
+    </a>
+    
+    <a href="product-details.html?product=abs-filament" class="product-card-link">
+      <div class="product-card" data-category="filament">
+        <img src="https://cdn.pixabay.com/photo/2020/01/24/08/53/3d-printing-4795030_1280.jpg" alt="ABS Filament">
+        <h3>ABS Filament - 1kg</h3>
+        <p>Durable ABS filament with excellent strength and heat resistance for functional parts.</p>
+        <span class="product-price">LKR 5,200</span>
+        <button class="btn-primary" onclick="event.preventDefault(); event.stopPropagation(); addToCart('ABS Filament - 1kg', 5200)"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+      </div>
+    </a>
+    
+    <a href="product-details.html?product=uv-resin" class="product-card-link">
+      <div class="product-card" data-category="resin">
+        <div class="product-badge">New</div>
+        <img src="https://cdn.pixabay.com/photo/2020/01/24/08/53/3d-printing-4795030_1280.jpg" alt="UV Resin">
+        <h3>UV Resin - 500ml</h3>
+        <p>Fast-curing, high-detail resin for SLA/DLP printers. Ideal for miniatures and detailed models.</p>
+        <span class="product-price">LKR 6,000</span>
+        <button class="btn-primary" onclick="event.preventDefault(); event.stopPropagation(); addToCart('UV Resin - 500ml', 6000)"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+      </div>
+    </a>
+    
+    <a href="Products\3D Printed Items\Creative & Fun\Full Suspension Mountain Bike\Full Suspension Mountain Bike.html" class="product-card-link">
+      <div class="product-card" data-category="3d printed products">
+        <img src="Products\3D Printed Items\Creative & Fun\Full Suspension Mountain Bike\FSMB img1.png" alt="Full Suspension Mountain Bike">
+        <h3>Full Suspension Mountain Bike</h3>
+        <p>Highly detailed 3D printed mountain bike with full suspension.</p>
+        <span class="product-price">LKR 2,500</span>
+        <button class="btn-primary" onclick="event.preventDefault(); event.stopPropagation(); addToCart('Full Suspension Mountain Bike', 2500)"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+      </div>
+    </a>
+
+    <a href="product-details.html?product=bambu-p1p" class="product-card-link">
+      <div class="product-card" data-category="3d printed products">
+        <img src="https://cdn.pixabay.com/photo/2018/06/29/22/48/3d-printer-3506320_1280.jpg" alt="3D Printer">
+        <h3>dsfdfadf</h3>
+        <p>Professional 3D printer with high precision, fast printing speeds, and multi-color capability.</p>
+        <span class="product-price">LKR 150,000</span>
+        <button class="btn-primary" onclick="event.preventDefault(); event.stopPropagation(); addToCart('Bambu Labs P1P', 150000)"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+      </div>
+    </a>
+    
+    <a href="product-details.html?product=printing-toolkit" class="product-card-link">
+      <div class="product-card" data-category="accessory">
+        <img src="https://cdn.pixabay.com/photo/2017/03/30/12/46/3d-printer-2180140_1280.jpg" alt="3D Tools">
+        <h3>3D Printing Toolkit</h3>
+        <p>Complete set of tools including spatulas, pliers, nozzles, and cleaning supplies.</p>
+        <span class="product-price">LKR 3,500</span>
+        <button class="btn-primary" onclick="event.preventDefault(); event.stopPropagation(); addToCart('3D Printing Toolkit', 3500)"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+      </div>
+    </a>
+    
+    <a href="product-details.html?product=pei-build-plate" class="product-card-link">
+      <div class="product-card" data-category="accessory">
+        <div class="product-badge">Sale</div>
+        <img src="https://cdn.pixabay.com/photo/2018/01/25/07/52/3d-3105762_1280.jpg" alt="Build Plate">
+        <h3>PEI Build Plate</h3>
+        <p>Magnetic PEI build plate for excellent adhesion and easy print removal.</p>
+        <span class="product-old-price">LKR 4,000</span>
+        <span class="product-price">LKR 2,800</span>
+        <button class="btn-primary" onclick="event.preventDefault(); event.stopPropagation(); addToCart('PEI Build Plate', 2800)"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="services-banner">
+  <h2>Need Custom 3D Printing? 🎯</h2>
+  <p>We offer professional 3D printing services for your custom projects, prototypes, and creative ideas.</p>
+  <p><strong>Students:</strong> We only charge for filament used - no service fees!</p>
+  <a href="services.html" class="btn-outline">Explore Our Services</a>
+</section>
+
+<footer>
+  <div class="footer-container">
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><i class="fas fa-envelope"></i> xnova.3d.services@gmail.com</li>
+        <li><i class="fas fa-phone-alt"></i> +94 716 102 081</li>
+        <li><i class="fas fa-map-marker-alt"></i> Colombo, Sri Lanka</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+        <li><a href="shop.html"><i class="fas fa-chevron-right"></i> Shop</a></li>
+        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Products</h4>
+      <ul>
+        <li><a href="#"><i class="fas fa-print"></i> 3D Printers</a></li>
+        <li><a href="#"><i class="fas fa-spool"></i> Filaments</a></li>
+        <li><a href="#"><i class="fas fa-vial"></i> Resins</a></li>
+        <li><a href="#"><i class="fas fa-tools"></i> Accessories</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Follow Us</h4>
+      <ul>
+        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+        <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+      </ul>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 X Nova 3D Printing — Designed by Dewmin Rajapaksha
+  </div>
+</footer>
+
+<script>
+  // Cart functionality
+  let cartItems = [];
+  
+  // Helper function to get product image
+  function getProductImage(productName) {
+    const imageMap = {
+      'PLA Filament - 1kg': 'https://cdn.pixabay.com/photo/2017/08/01/08/29/3d-printer-2562901_1280.jpg',
+      'ABS Filament - 1kg': 'https://cdn.pixabay.com/photo/2020/01/24/08/53/3d-printing-4795030_1280.jpg',
+      'UV Resin - 500ml': 'https://cdn.pixabay.com/photo/2020/01/24/08/53/3d-printing-4795030_1280.jpg',
+      'Full Suspension Mountain Bike': 'Products\\3D Printed Items\\Creative & Fun\\Full Suspension Mountain Bike\\FSMB img1.png',
+      'Bambu Labs P1P': 'https://cdn.pixabay.com/photo/2018/06/29/22/48/3d-printer-3506320_1280.jpg',
+      '3D Printing Toolkit': 'https://cdn.pixabay.com/photo/2017/03/30/12/46/3d-printer-2180140_1280.jpg',
+      'PEI Build Plate': 'https://cdn.pixabay.com/photo/2018/01/25/07/52/3d-3105762_1280.jpg'
+    };
+    
+    return imageMap[productName] || 'https://cdn.pixabay.com/photo/2017/08/01/08/29/3d-printer-2562901_1280.jpg';
+  }
+
+  // Helper function to get product description
+  function getProductDescription(productName) {
+    const descriptionMap = {
+      'PLA Filament - 1kg': 'High-quality PLA filament for FDM 3D printing',
+      'ABS Filament - 1kg': 'Durable ABS filament with excellent strength',
+      'UV Resin - 500ml': 'Fast-curing, high-detail resin for SLA/DLP printers',
+      'Full Suspension Mountain Bike': 'Highly detailed 3D printed mountain bike',
+      'Bambu Labs P1P': 'Professional 3D printer with high precision',
+      '3D Printing Toolkit': 'Complete set of tools for 3D printing',
+      'PEI Build Plate': 'Magnetic PEI build plate for excellent adhesion'
+    };
+    
+    return descriptionMap[productName] || 'High-quality 3D printing product';
+  }
+
+  function updateCartCount() {
+    const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+    document.getElementById('cartCount').textContent = cartCount;
+  }
+  
+  function addToCart(productName, price) {
+    // Check if item already exists in cart
+    const existingItemIndex = cartItems.findIndex(item => item.name === productName);
+    
+    if (existingItemIndex !== -1) {
+      // Item exists, increase quantity
+      cartItems[existingItemIndex].quantity += 1;
+    } else {
+      // Add new item to cart
+      cartItems.push({ 
+        name: productName, 
+        price: price,
+        quantity: 1,
+        image: getProductImage(productName),
+        description: getProductDescription(productName)
+      });
+    }
+    
+    updateCartCount();
+    
+    // Save to localStorage
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    
+    // Show notification
+    const notification = document.getElementById('cartNotification');
+    notification.classList.add('show');
+    
+    setTimeout(() => {
+      notification.classList.remove('show');
+    }, 3000);
+    
+    console.log(`Added to cart: ${productName} - LKR ${price}`);
+  }
+  
+  // Load cart from localStorage on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const savedCartItems = localStorage.getItem('cartItems');
+    
+    if (savedCartItems) {
+      cartItems = JSON.parse(savedCartItems);
+      updateCartCount();
+    }
+  });
+
+  // Filter functionality
+  document.querySelectorAll('.filter-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove active class from all buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      // Add active class to clicked button
+      button.classList.add('active');
+      
+      const filter = button.getAttribute('data-filter');
+      const products = document.querySelectorAll('.product-card-link');
+      
+      products.forEach(product => {
+        const category = product.querySelector('.product-card').getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
+          product.style.display = 'block';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    });
+  });
+  
+  // Check if logo loaded properly
+  window.addEventListener('load', function() {
+    const logo = document.querySelector('.logo-img');
+    if (logo && logo.naturalHeight === 0) {
+      document.getElementById('fallbackText').style.display = 'block';
+    }
+  });
+</script>
+
+</body>
+</html>

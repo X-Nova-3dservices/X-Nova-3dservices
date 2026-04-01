@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Files - X Nova</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; padding: 20px; background: #f4f4f4; color: #333; }
+    .container { max-width: 600px; margin: 50px auto; background: White; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    h1 { text-align: center; margin-bottom: 30px; }
+    .upload-zone { border: 2px dashed #ccc; padding: 40px; text-align: center; border-radius: 10px; cursor: pointer; transition: border-color 0.3s; }
+    .upload-zone:hover { border-color: #ffcc00; }
+    input[type="file"] { display: none; }
+    button { background: #ffcc00; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: 600; margin-top: 20px; width: 100%; }
+    button:hover { background: #e6b800; }
+    #status { margin-top: 20px; text-align: center; }
+    .file-list { margin-top: 20px; text-align: left; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Upload Files</h1>
+  <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+    <p>Click here to select files</p>
+    <input type="file" id="fileInput" multiple>
+  </div>
+  <div class="file-list" id="fileList"></div>
+  <button onclick="uploadFiles()">Upload</button>
+  <p id="status"></p>
+</div>
+
+<script>
+  const fileInput = document.getElementById('fileInput');
+  const fileList = document.getElementById('fileList');
+
+  fileInput.addEventListener('change', () => {
+    fileList.innerHTML = '';
+    Array.from(fileInput.files).forEach(file => {
+      fileList.innerHTML += `<div>${file.name} (${(file.size/1024).toFixed(1)} KB)</div>`;
+    });
+  });
+
+  async function uploadFiles() {
+    const files = fileInput.files;
+    if (files.length === 0) {
+      alert("Please select files first!");
+      return;
+    }
+
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
+
+    const status = document.getElementById('status');
+    status.textContent = "Uploading...";
+
+    try {
+      const response = await fetch('http://localhost:5000/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.json();
+      if (result.success) {
+        status.textContent = "Upload successful!";
+        status.style.color = "green";
+      } else {
+        status.textContent = "Upload failed: " + result.message;
+        status.style.color = "red";
+      }
+    } catch (error) {
+      status.textContent = "Error: " + error.message;
+      status.style.color = "red";
+    }
+  }
+</script>
+
+</body>
+</html>

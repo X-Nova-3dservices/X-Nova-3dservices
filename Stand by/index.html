@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>X Nova 3D Printing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      color: #ddd;
+      background-color: #0b0b0b;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background: #000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      top: 0;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    /* Logo Styles */
+    .logo {
+      display: flex;
+      align-items: center;
+      height: 40px;
+    }
+
+    .logo a {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-img {
+      height: 80px;
+      width: auto;
+      max-width: 150px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Fallback text if image doesn't load */
+    .logo-fallback {
+      font-size: 1.6em;
+      font-weight: 600;
+      color: #fff;
+      display: none;
+      text-decoration: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      margin: 0 15px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: #ffcc00;
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #ffcc00;
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    .hero video {
+      width: 100%;
+      height: 60vh;
+      object-fit: cover;
+      object-position: center center;
+      filter: brightness(80%);
+      display: block;
+    }
+
+    /* Text after hero video */
+    .intro-content {
+      text-align: center;
+      padding: 60px 20px;
+      background-color: #000;
+      margin-top: 0;
+      position: relative;
+    }
+
+    .intro-content h1 {
+      font-size: 3.5em;
+      margin-bottom: 20px;
+      color: #ffcc00;
+      position: relative;
+    }
+
+    .intro-content p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #ddd;
+      position: relative;
+    }
+
+    .btn-primary {
+      background: #ffcc00;
+      color: #111;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 25px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      background: #e6b800;
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(255, 204, 0, 0.3);
+    }
+
+    /* Services Section */
+    .section {
+      padding: 100px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section h2 {
+      text-align: center;
+      margin-bottom: 60px;
+      font-size: 2.8em;
+      color: #ffcc00;
+      position: relative;
+    }
+    
+    .section h2::after {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 4px;
+      background: #ffcc00;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .service {
+      background: #1a1a1a;
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 2px solid #222;
+    }
+
+    .service:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(255, 204, 0, 0.2);
+      border-color: #ffcc00;
+    }
+
+    .service img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      transition: transform 0.3s;
+    }
+    
+    .service:hover img {
+      transform: scale(1.05);
+    }
+
+    .service h3 {
+      font-size: 1.4em;
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    .service p {
+      color: #ccc;
+      line-height: 1.7;
+    }
+
+    /* Student Offer Section */
+    .student-offer {
+      background: linear-gradient(135deg, #ffcc00, #ffb300);
+      color: #111;
+      text-align: center;
+      padding: 70px 20px;
+      border-radius: 20px;
+      margin: 80px auto;
+      max-width: 1000px;
+      box-shadow: 0 15px 30px rgba(255, 204, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .student-offer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+    }
+
+    .student-offer h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .student-offer p {
+      font-size: 1.2em;
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    /* Footer */
+    footer {
+      background: #000;
+      color: #ddd;
+      padding: 80px 20px 40px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+    }
+
+    footer h4 {
+      color: #ffcc00;
+      margin-bottom: 20px;
+      font-size: 1.2em;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    footer h4::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 3px;
+      background: #ffcc00;
+      bottom: 0;
+      left: 0;
+      border-radius: 2px;
+    }
+
+    footer ul {
+      list-style: none;
+    }
+
+    footer ul li {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+    
+    footer ul li i {
+      margin-right: 10px;
+      color: #ffcc00;
+      width: 16px;
+    }
+
+    footer ul li a {
+      color: #bbb;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer ul li a:hover {
+      color: #ffcc00;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 60px;
+      font-size: 0.9em;
+      color: #888;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #222;
+      border-radius: 50%;
+      color: #fff;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .social-icons a:hover {
+      background: #ffcc00;
+      transform: translateY(-3px);
+      color: #111;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero video {
+        height: 50vh;
+      }
+      
+      .intro-content h1 {
+        font-size: 2.5em;
+      }
+
+      .intro-content p {
+        font-size: 1.1em;
+      }
+
+      .nav-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav a {
+        margin: 0 10px;
+      }
+
+      .logo-img {
+        height: 60px;
+      }
+      
+      .section {
+        padding: 80px 20px;
+      }
+      
+      .section h2 {
+        font-size: 2.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <div class="logo">
+        <a href="index.html" style="display: inline-block;">
+          <img src="Photos\Logo and QR\logo flat br.png" alt="X Nova 3D Printing" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallbackText').style.display='block';">
+        </a>
+        <span id="fallbackText" class="logo-fallback">X Nova</span>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="shop.html">Shop</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section with Animation Video -->
+  <section class="hero">
+    <video autoplay muted loop>
+      <source src="Index pg videos\index page animation.mp4" type="video/mp4">
+    </video>
+  </section>
+
+  <!-- Text Section after Hero -->
+  <section class="intro-content">
+    <h1>X Nova 3D Printing</h1>
+    <p>Professional 3D printing and custom fabrication services.  
+    Bringing ideas to life — from prototypes to products.</p>
+    <a href="services.html" class="btn-primary"><i class="fas fa-rocket"></i> Explore Services</a>
+  </section>
+
+  <!-- Services Section -->
+  <section class="section" id="services">
+    <h2>Our 3D Printing Services</h2>
+    <div class="services">
+      <div class="service">
+        <img src="https://cdn.pixabay.com/photo/2017/08/01/08/29/3d-printer-2562901_1280.jpg" alt="Custom 3D Printing">
+        <h3>Custom 3D Printing</h3>
+        <p>Upload your designs or share your idea — we'll bring it to life with high precision and quality materials.</p>
+      </div>
+      <div class="service">
+        <img src="https://cdn.pixabay.com/photo/2020/01/24/08/53/3d-printing-4795030_1280.jpg" alt="3D Printed Items">
+        <h3>3D Printed Items for Sale</h3>
+        <p>Shop unique 3D printed items, from creative models to functional parts — all crafted with passion and accuracy.</p>
+      </div>
+      <div class="service">
+        <img src="https://cdn.pixabay.com/photo/2018/06/29/22/48/3d-printer-3506320_1280.jpg" alt="Rapid Prototyping">
+        <h3>Rapid Prototyping</h3>
+        <p>Get quick, affordable prototypes for your projects, startups, or academic work with fast turnaround.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Student Offer Section -->
+  <section class="student-offer">
+    <h2>Special Support for Students 🎓</h2>
+    <p>At <strong>X Nova</strong>, we believe in supporting innovation.  
+      For <strong>university and school students</strong> who need 3D printed parts for academic projects,  
+      we only charge for the <strong>filament used — no service fee</strong> at all.</p>
+    <p>This initiative is done purely as a <strong>service to help learners</strong> bring their ideas to reality.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="footer-container">
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><i class="fas fa-envelope"></i> xnova.3d.services@gmail.com</li>
+          <li><i class="fas fa-phone-alt"></i> +94 716 102 081</li>
+          <li><i class="fas fa-map-marker-alt"></i> Colombo, Sri Lanka</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+          <li><a href="shop.html"><i class="fas fa-chevron-right"></i> Shop</a></li>
+          <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html"><i class="fas fa-print"></i> Custom 3D Printing</a></li>
+          <li><a href="services.html"><i class="fas fa-bolt"></i> Rapid Prototyping</a></li>
+          <li><a href="services.html"><i class="fas fa-pencil-ruler"></i> 3D Design Assistance</a></li>
+          <li><a href="services.html"><i class="fas fa-graduation-cap"></i> Student Projects</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow Us</h4>
+        <ul>
+          <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+          <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+          <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+        </ul>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 X Nova 3D Printing — Designed by Dewmin Rajapaksha
+    </div>
+  </footer>
+
+  <script>
+    // Check if logo loaded properly
+    window.addEventListener('load', function() {
+      const logo = document.querySelector('.logo-img');
+      if (logo && logo.naturalHeight === 0) {
+        document.getElementById('fallbackText').style.display = 'block';
+      }
+    });
+  </script>
+
+</body>
+</html>

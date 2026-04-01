@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Services - X Nova 3D Printing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    body { color:#222; background:#fff; overflow-x:hidden; }
+
+    header {
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      top: 0;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    /* Logo Styles */
+    .logo {
+      display: flex;
+      align-items: center;
+      height: 40px;
+    }
+
+    .logo a {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-img {
+      height: 100px;
+      width: auto;
+      max-width: 200px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Fallback text if image doesn't load */
+    .logo-fallback {
+      font-size: 1.6em;
+      font-weight: 600;
+      color: #111; /* Dark text for light backgrounds */
+      display: none;
+      text-decoration: none;
+    }
+    
+    nav a { 
+      text-decoration: none; 
+      color: #333; 
+      margin: 0 15px; 
+      font-weight: 500; 
+      transition: color 0.3s ease; 
+      position: relative;
+    }
+    
+    nav a:hover { 
+      color: #ffcc00; 
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #ffcc00;
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* NEW: Search + Auth styles */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-bar input {
+      background: #ffffff;
+      border: 2px solid #222;
+      color: #ddd;
+      padding: 8px 10px;
+      border-radius: 6px;
+      width: 180px;
+    }
+
+    .search-bar input::placeholder {
+      color: #888;
+    }
+
+    .auth-links a {
+      color: #000000;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .auth-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 70vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      color: white;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5)), url('https://cdn.pixabay.com/photo/2017/08/01/08/29/3d-printer-2562901_1280.jpg') center/cover no-repeat;
+      padding-top: 80px; /* Added padding for fixed header */
+    }
+
+    .hero h1 { font-size:3em; text-align:center; margin-bottom:20px; }
+    .hero p { font-size:1.2em; text-align:center; max-width:700px; }
+
+    .btn-primary {
+      background: #ffcc00;
+      color: #111;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 20px;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: #e6b800; }
+
+/* Sections */
+.section { 
+  padding: 80px 20px; 
+  max-width: 1200px; 
+  margin: auto; 
+}
+
+.section h2 { 
+  text-align: center; 
+  margin-bottom: 40px; 
+  font-size: 2.5em; 
+  color: #333; 
+  position: relative;
+}
+
+.section h2::after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 4px;
+  background: #fff7d9;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.services, .products { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+  gap: 30px; 
+}
+
+.service, .product {
+  background: #fffdec;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.service:hover, .product:hover { 
+  transform: translateY(-10px); 
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15); 
+}
+
+/* Image & Video styling */
+.service img, .product img,
+.service video, .product video { 
+  width: 100%; 
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px; 
+  margin-bottom: 20px; 
+  transition: transform 0.3s;
+}
+
+/* Hover effect for media */
+.service:hover img, .product:hover img,
+.service:hover video, .product:hover video {
+  transform: scale(1.05);
+}
+
+.service h3, .product h3 { 
+  font-size: 1.4em; 
+  color: #111; 
+  margin-bottom: 15px; 
+}
+
+.service p, .product p { 
+  color: #555; 
+  line-height: 1.6;
+}
+
+
+    /* Student Offer Highlight */
+    .student-offer {
+      background: linear-gradient(135deg, #ffcc00, #ffb300);
+      color: #111;
+      text-align: center;
+      padding: 60px 20px;
+      border-radius: 20px;
+      margin: 80px auto;
+      max-width: 1000px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .student-offer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+    }
+    
+    .student-offer h2 { 
+      font-size:2.2em; 
+      margin-bottom:20px; 
+      position: relative;
+    }
+    
+    .student-offer p { 
+      font-size:1.2em; 
+      margin-bottom:15px; 
+      position: relative;
+    }
+
+    /* Upload Section Styles */
+.upload-info {
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.upload-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.upload-option {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.upload-option i {
+  font-size: 3em;
+  color: #ffcc00;
+  margin-bottom: 20px;
+}
+
+.upload-option h4 {
+  color: #111;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+}
+
+.upload-option ul {
+  text-align: left;
+  margin-top: 15px;
+}
+
+.upload-option li {
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.upload-area {
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  margin-top: 30px;
+  border: 2px dashed #ffcc00;
+}
+
+.upload-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #333;
+  border: 2px solid #333;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-outline:hover {
+  background: #333;
+  color: white;
+  transform: translateY(-2px);
+}
+
+    /* Footer */
+    footer { 
+      background:#111; 
+      color:#ddd; 
+      padding:80px 20px 40px; 
+      margin-top:80px; 
+    }
+    
+    .footer-container { 
+      max-width:1200px; 
+      margin:auto; 
+      display:grid; 
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); 
+      gap:40px; 
+    }
+    
+    footer h4 { 
+      color:#fff; 
+      margin-bottom:20px; 
+      font-size:1.2em; 
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    footer h4::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 3px;
+      background: #ffcc00;
+      bottom: 0;
+      left: 0;
+      border-radius: 2px;
+    }
+    
+    footer ul { 
+      list-style:none; 
+    }
+    
+    footer ul li { 
+      margin-bottom:12px; 
+      display: flex;
+      align-items: center;
+    }
+    
+    footer ul li i {
+      margin-right: 10px;
+      color: #ffcc00;
+      width: 16px;
+    }
+    
+    footer ul li a { 
+      color:#bbb; 
+      text-decoration:none; 
+      transition: color 0.3s; 
+    }
+    
+    footer ul li a:hover { 
+      color:#ffcc00; 
+    }
+    
+    .footer-bottom { 
+      text-align:center; 
+      margin-top:60px; 
+      font-size:0.9em; 
+      color:#aaa; 
+      padding-top: 20px;
+      border-top: 1px solid #333;
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #222;
+      border-radius: 50%;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icons a:hover {
+      background: #ffcc00;
+      transform: translateY(-3px);
+      color: #111;
+    }
+
+    @media(max-width:768px) {
+      .nav-container { 
+        flex-direction:column; 
+        gap: 15px;
+      }
+      
+      nav a { 
+        margin:10px 0; 
+      }
+      
+      .hero { 
+        padding-top: 120px; 
+        height: 60vh; 
+      }
+      
+      .hero h1 { 
+        font-size: 2.2em; 
+      }
+      
+      .section h2 {
+        font-size: 2em;
+      }
+      
+      .services, .products {
+        grid-template-columns: 1fr;
+      }
+
+      .upload-options {
+        grid-template-columns: 1fr;
+      }
+
+      .upload-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <div class="logo">
+        <a href="index.html" style="display: inline-block;">
+          <img src="Photos\Logo and QR\logo 2.png" alt="X Nova 3D Printing" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallbackText').style.display='block';">
+        </a>
+        <span id="fallbackText" class="logo-fallback">X Nova</span>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="shop.html">Shop</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="search-bar">
+          <input type="text" placeholder="Search...">
+        </div>
+        <div class="auth-links">
+          <a href="sign in_sign up.html">Sign In</a> / <a href="sign in_sign up.html">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <h1>Our 3D Printing Services</h1>
+      <p>Professional 3D printing services and high-quality 3D printed products. Bringing your ideas to life!</p>
+      <a href="contact.html" class="btn-primary">Get a Quote</a>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section">
+    <h2>Our Services</h2>
+    <div class="services">
+      <div class="service">
+          <video autoplay muted loop playsinline>
+          <source src="services photos videos\v1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <h3>Custom 3D Printing</h3>
+        <p>Upload your designs or share your ideas. We bring them to life with high precision and premium materials.</p>
+      </div>
+      <div class="service">
+       <video autoplay muted loop playsinline>
+          <source src="services photos videos\v2.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <h3>Rapid Prototyping</h3>
+        <p>Get quick prototypes for startups, projects, or academic purposes with fast turnaround.</p>
+      </div>
+      <div class="service">
+        <video autoplay muted loop playsinline>
+          <source src="services photos videos\v3.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <h3>3D Design Assistance</h3>
+        <p>We help refine your 3D models for perfect prints and functional products.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- File Upload Section -->
+  <section class="section" style="background: #f8f9fa; border-radius: 15px;">
+    <h2>Design & File Upload</h2>
+    <div class="upload-info">
+      <h3>How It Works</h3>
+      <p>We offer two options for your 3D printing projects:</p>
+      
+      <div class="upload-options">
+        <div class="upload-option">
+          <i class="fas fa-upload"></i>
+          <h4>Upload Your Design</h4>
+          <p>Already have a 3D model? Upload your CAD files (STL, OBJ, STEP, etc.) and we'll handle the printing.</p>
+          <ul>
+            <li>Supported formats: STL, OBJ, STEP, 3MF</li>
+            <li>Max file size: 100MB</li>
+            <li>Include design specifications</li>
+          </ul>
+        </div>
+        
+        <div class="upload-option">
+          <i class="fas fa-pencil-ruler"></i>
+          <h4>We Design For You</h4>
+          <p>Don't have a design? Share your idea or requirements and our team will create the 3D model for you.</p>
+          <ul>
+            <li>Professional 3D modeling service</li>
+            <li>Multiple design revisions</li>
+            <li>Technical consultation included</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="upload-area">
+        <h4>Ready to Get Started?</h4>
+        <p>Choose your option below:</p>
+        <div class="upload-buttons">
+          <label class="btn-primary" style="cursor: pointer;">
+            <i class="fas fa-upload"></i> Upload Your Design
+            <input 
+              type="file"
+              hidden
+              multiple
+              accept=".stl,.obj,.step,.stp,.3mf"
+              onchange="handleFileUpload(this)"
+            >
+          </label>
+          <a href="contact.html" class="btn-outline">
+            <i class="fas fa-pencil-ruler"></i> Request Design Service
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlighted Student Offer -->
+  <section class="student-offer">
+    <h2>🎓 Special Student Offer</h2>
+    <p>For university and school students, we <strong>only charge for the filament used</strong> — no service fee at all.</p>
+    <p>This is done purely as a service to help students bring their ideas to reality.</p>
+  </section>
+
+  <!-- Products / Shop -->
+ <section class="section">
+  <h2>Featured 3D Printed Items</h2>
+  <div class="products">
+    <div class="product">
+      <video autoplay muted loop playsinline>
+        <source src="services photos videos\v4.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <h3>Custom Figurines</h3>
+      <p>High-quality 3D printed custom figurines made with durable materials.</p>
+    </div>
+
+    <div class="product">
+      <video autoplay muted loop playsinline>
+        <source src="services photos videos\v5.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <h3>Architectural Models</h3>
+      <p>Detailed architectural models perfect for presentations and displays.</p>
+    </div>
+
+    <div class="product">
+      <video autoplay muted loop playsinline>
+        <source src="services photos videos\v6.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <h3>Functional Parts</h3>
+      <p>Custom functional parts and components for various applications.</p>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+          <li><a href="shop.html"><i class="fas fa-chevron-right"></i> Shop</a></li>
+          <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html"><i class="fas fa-print"></i> Custom 3D Printing</a></li>
+          <li><a href="services.html"><i class="fas fa-bolt"></i> Rapid Prototyping</a></li>
+          <li><a href="services.html"><i class="fas fa-pencil-ruler"></i> 3D Design Assistance</a></li>
+          <li><a href="services.html"><i class="fas fa-graduation-cap"></i> Student Projects</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact Info</h4>
+        <ul>
+          <li><i class="fas fa-phone-alt"></i> +94 716 102 081</li>
+          <li><i class="fas fa-envelope"></i> xnova.3d.services@gmail.com</li>
+          <li><i class="fas fa-map-marker-alt"></i> Colombo, Sri Lanka</li>
+        </ul>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 X Nova 3D Printing — Designed by Dewmin Rajapaksha
+    </div>
+  </footer>
+
+  <script>
+    // Check if logo loaded properly
+    window.addEventListener('load', function() {
+      const logo = document.querySelector('.logo-img');
+      if (logo && logo.naturalHeight === 0) {
+        document.getElementById('fallbackText').style.display = 'block';
+      }
+    });
+  </script>
+
+  <script>
+  function handleFileUpload(input) {
+    const files = input.files;
+    if (files.length > 0) {
+      alert(files.length + " file(s) selected");
+      // You can upload files here using FormData + fetch/AJAX
+    }
+  }
+  </script>
+
+
+</body>
+</html>
